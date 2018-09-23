@@ -1,0 +1,19 @@
+
+<h1>Choose Account</h1>
+<button onclick="load_page(old_dest)" style="position: absolute; top: 100px; right: 10px;"><i class="fas fa-caret-left"></i> Back</button>
+<div style="text-align: center; font-size: 1.5em;">
+    <strong>{{ t.amount|floatformat:2 }} €</strong><br />
+    {{ t.description }}
+</div>
+<div class="select-account-wrapper">
+        <div>
+{% for a in accounts %}
+<div class="account-select">
+    <form class="catched" method="POST" action="{% url 'core:update_transaction' %}">{% csrf_token %}
+        <input type="hidden" value="{{ t.pk }}" name="transaction_id" class="sub-overlay-transaction-id" />
+        <input type="hidden" name="pk" value="{{ a.pk }}" />
+        <button type="submit" class="icon-select-object" style="width: calc(100% - 20px); padding:.5em 10px"><i class="{{ a.icon.icon }}"></i> {{a.name}}</button>
+    </form>
+</div>
+{% endfor %}
+</div></div>

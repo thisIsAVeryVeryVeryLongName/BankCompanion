@@ -1,0 +1,23 @@
+
+<h1>Budget Overview</h1>
+
+<button onclick="load_page('{%url 'core:create_account_view'%}')" style="position: absolute; top: 100px; right:65px; width:45px"><i class="fas fa-plus-square"></i></button>
+<button onclick="load_page('{%url 'core:edit_account_list_view'%}')" style="position: absolute; top: 100px; right: 10px; width: 45px;"><i class="fas fa-pen-square"></i></button>
+
+<div class="vconto" style="background-color: rgba(255,255,255,.3); color: #fff;">
+<i class="{{default_account.icon}}"/> <strong>Account</strong><div class="vconto-balance">{{default_account.get_balance|floatformat:2}} €</div> <span style="background: {{default_account.color_from_percentage}};" class="vconto-average-count">{% if default_account.calc_fpm_percentage > 0%}+{%endif%}{{default_account.calc_fpm_percentage|floatformat:2}}%</span><div style="font-size: .8em">total available amount {{default_account.balance|floatformat:2}} €</div>
+<div class="bar-container">
+        <div class="bar" style="width:50%;background-color:#000;margin:auto;min-height:0.5em;margin-top:0.5em;opacity: .3;"></div>
+        <div class="bar" style="width:{{default_account.calc_fpm_percentage_max_100}}%;background-color:{{default_account.color_from_percentage}};"></div>
+    </div>
+</div>    
+{% for account in accounts %}
+
+<div class="vconto">
+    <i class="{{account.icon.icon}}"></i> <strong>{{account.name}}</strong> <div class="vconto-balance">{{account.balance|floatformat:2}} €</div> <span style="background: {{account.color_from_percentage}};" class="vconto-average-count">{% if account.calc_fpm_percentage > 0%}+{%endif%}{{account.calc_fpm_percentage|floatformat:2}}%</span> {{account.money_sub_month|floatformat:2}} € spent this month
+    <div class="bar-container">
+        <div class="bar" style="width:50%;background-color:#000;margin:auto;min-height:0.5em;margin-top:0.5em; opacity: .3;"></div>
+        <div class="bar" style="width:{{account.calc_fpm_percentage_max_100}}%;background-color:{{account.color_from_percentage}};"></div>
+    </div>
+</div>
+{% endfor %}

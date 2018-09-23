@@ -1,0 +1,53 @@
+
+<a onclick="hideOverlay()" class="close-overlay"><i class="fas fa-times"></i></a>
+<h1>New transactions</h1>
+<h5 style="font-size: 1em;">Please assign the new transactions to your accounts.</h5>
+
+{% for t in transactions %}
+<div class="transaction visible">
+    <input type="hidden" value="{{ t.pk }}" class="t_id" />
+    <div class="description">{{t.description}}</div>
+    <div class="recipient">{{t.recipient}}</div>
+    <div class="iban">{{t.iban}}</div>
+    <div class="amount">{{t.amount|floatformat:2}}€</div>
+    <div class="select-account-wrapper">
+        <div>
+            {% for a in accounts %}
+            <div class="account-select">{% csrf_token %}
+                <input type="hidden" value="{{ t.pk }}" name="transaction_id" class="sub-overlay-transaction-id" />
+                <input type="hidden" name="pk" value="{{ a.pk }}" />
+                <button type="submit" class="icon-select-object"><i class="{{ a.icon.icon }}"></i></button>
+            </div>
+            {% endfor %}
+            </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<script>
+$('.account-select').click(function() {
+    prepareAjax();
+    GO_TO_TOP = false;
+    var me = $(this);
+    var pk = $(this).find('input[name="pk"]').val();
+    var transaction_id = $(this).find('input[name="transaction_id"]').val();
+    // Send POST request
+    $.ajax({
+        async: true,
+        type: "POST",
+        url: "{% url 'core:asign_unasigned_transactions' %}",
+        traditional: true,
+        data: {pk: pk, transaction_id: transaction_id},
+        success: function(response) {
+            $(me).parent().parent().parent().removeClass('visible');
+            $(me).parent().parent().parent().fadeOut();
+            if (!$('#main-overlay .transaction').hasClass('visible')) {
+                hideOverlay();
+            }
+        },
+        error: function(data) {console.log(data)}
+    });
+    
+});
+</script>

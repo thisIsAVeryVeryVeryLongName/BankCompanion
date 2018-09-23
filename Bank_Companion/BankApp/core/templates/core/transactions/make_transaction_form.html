@@ -1,0 +1,19 @@
+<h1>Make a Transaction</h1>
+
+<form class="catched" method="post" action="{% url 'core:submit_make_transaction_view' %}">
+{{form.as_p}}
+<button type="submit" >Make it!</button>
+</form>
+
+<form class="catched" method="post" action="{% url 'core:submit_make_transaction_view' %}" enctype="multipart/form-data">
+<input type="file" name="file"/>
+<button type="submit" >Load from PDF</button>
+</form>
+<style>
+button {
+    width: 100%;
+}
+input {
+    text-transform: inherit;
+}
+</style>

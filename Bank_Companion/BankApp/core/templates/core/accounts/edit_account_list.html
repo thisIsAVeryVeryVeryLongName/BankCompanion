@@ -1,0 +1,43 @@
+
+<h1>Edit V-Accounts</h1>
+<button onclick="load_page('{%url 'core:account_list_view'%}')" style="position: absolute; top: 100px; right: 10px;"><i class="fas fa-caret-left"></i> Back</button>
+
+<div class="vconto" style="background:rgba(255,255,255,.3); color: #fff;">
+<strong>Account</strong><div class="vconto-balance">{{default_account.get_balance|floatformat:2}} €</div> 
+</div>    
+<div id="edit-wrapper">
+{% for account in accounts %}
+<div class="vconto">
+    <strong>{{account.name}}</strong> <div class="vconto-balance">{{account.balance|floatformat:2}} €</div>
+    
+<form style="float: left;text-align: right; margin-left: -19px;" action="{% url 'core:account_sub_money' account.pk %}" class="catched" method="POST">
+<button type="submit">+</button>
+<input type="number" name="amount" value="100.00" step="0.01" /> €
+</form>
+<form action="{% url 'core:account_add_money' account.pk %}" class="catched" method="POST">
+<input type="hidden" name="amount" value="100.00" step="0.01" />
+<button type="submit">-</button>
+</form>
+
+</div>
+{% endfor %}
+</div>
+<script>
+$('.vconto input[type="number"]').change(function() {
+    $(this).parent().parent().find('input[type="hidden"]').val($(this).val());
+});
+</script>
+<style>
+input[type="number"] {
+    background: rgba(0,0,0,.1);
+    width: 50%;
+    text-align: center;
+}
+#edit-wrapper .vconto strong {
+    left: -5px;
+    border-radius: 13px;
+    top: -15px;
+    background: rgb(178, 178, 178);
+    color: #fff;
+}
+</style>

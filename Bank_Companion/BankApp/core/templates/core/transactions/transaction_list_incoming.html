@@ -1,0 +1,25 @@
+<h1>{{title}}</h1>
+
+<div class="vconto" style="background-color: rgba(255,255,255,.3); color: #fff;">
+<i class="fas fa-globe"/> <strong>Stats</strong><div class="vconto-balance">{{money_sum|floatformat:2}}€</div> <span style="background: {{percentage_color}};" class="vconto-average-count">{% if percentage_sum > 0%}+{%endif%}{{percentage_sum|floatformat:2}}%</span>
+<div class="bar-container">
+        <div class="bar" style="width:50%;background-color:#000;margin:auto;min-height:0.5em;margin-top:0.5em;opacity: .3;"></div>
+        <div class="bar" style="width:{{percentage_width}}%;background-color:{{percentage_color}};"></div>
+    </div>
+</div> 
+{% for t in transactions %}
+<a onclick="load_page('{% url 'core:transaction_detail_view' t.pk %}')">
+<div class="transaction rf-list" style="padding-top: 30px; padding-bottom: 20px;">
+{{t.description}}
+<span class="rf-title">+ {{t.amount|floatformat:2}} €</span>
+{% if not t.virtual_bank.icon %}
+<i style="background:#0ba070;" class="fas fa-angle-double-down"></i>
+{% else %}
+<i style="background:#0ba070;" class="{{t.virtual_bank.icon.icon}}"></i>
+{% endif %}
+</div>
+</a>
+{% endfor %}
+
+
+

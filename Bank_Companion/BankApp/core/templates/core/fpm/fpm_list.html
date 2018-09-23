@@ -1,0 +1,42 @@
+
+<h1>Finance Companion</h1>
+
+<div class="vconto">
+<i class=""/> Allgemein - {{default_account.calc_fpm_percentage}}% vom Durchschnitt
+<div class="bar-container">
+        <div class="bar" style="width:{{default_account.calc_fpm_percentage_max_100}}%;background-color:{{default_account.color_from_percentage}};"/>
+        <div style="width:50%;border-radius:2.5em;background-color:gray;margin:auto;min-height:0.5em;margin-top:0.5em;"></div>
+    </div>
+</div>    
+{% for account in accounts %}
+
+<div class="vconto">
+    <i class="{{account.icon.icon}}"/> {{account.name}} - {{account.calc_fpm_percentage}}% vom Durchschnitt - {{account.money_sub_month}}€ Ausgaben in disem Monat
+    <div class="bar-container">
+        <div class="bar" style="width:{{account.calc_fpm_percentage_max_100}}%;background-color:{{account.color_from_percentage}};"/>
+        <div style="width:50%;border-radius:2.5em;background-color:gray;margin:auto;min-height:0.5em;margin-top:0.5em;"></div>
+    </div>
+</div>
+{% endfor %}
+
+<style>
+.vconto {
+    margin:3em;
+    background-color:white;
+    border: 1px;
+    position:relative;
+    padding: 2em;
+
+}
+.bar-container {
+    width:100%;
+    text-align:center;
+}
+.bar {
+    min-width:3px;
+    min-height:0.5em;
+    border-radius:0.25em;
+    margin:auto;
+    
+}
+</style>

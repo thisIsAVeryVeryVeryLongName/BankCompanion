@@ -1,0 +1,12 @@
+
+<h1>My SharingGroups</h1>
+{%if has_groups%}
+     {%for s in sharing_info%}
+     <a onclick="load_page('{% url 'core:sharing_group_detail_view' s.sharing_group.pk %}')"> <div class="sharing-group">  {{s.sharing_group.name}} </div></a> 
+     {%endfor%}
+{%else%}
+    <h1>Not part of any Sharing Group</h1>
+{%endif%}
+
+<button onclick="load_page('{%url 'core:create_sharing_group_view'%}')"> Create </button> 
+

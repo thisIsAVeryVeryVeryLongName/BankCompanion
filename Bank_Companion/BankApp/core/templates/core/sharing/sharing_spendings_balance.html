@@ -1,0 +1,9 @@
+{% block content %}
+  <h1>Your Balances</h1>
+  <button onclick="load_page('{%url 'core:sharing_group_detail_view' sharing_group.pk %}')" style="position: absolute; top: 100px; right: 10px;"><i class="fas fa-caret-left"></i> Back</button>
+    {%for u,z in balance_list%}
+        <div  class="sharing-group"> {{u.first_name}}<br>{{z|floatformat:2}} €<br></div>
+    {%endfor%}  
+     <button onclick="load_page('{%url 'core:sharing_make_transaction' sharing_group.pk %}')">Make Transaction</button>
+{% endblock %}
+

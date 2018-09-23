@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>Bank Application</title>{% endblock %}
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta id="extViewportMeta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    
+    <!-- Add additional JS in static file -->{% load static %}
+    {% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/lib/jquery.form.min.js' %}" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+    {% endblock %}
+    <!-- Add additional CSS in static file -->
+    {% block stylesheet %}
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Reem+Kufi" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    {% endblock %}
+</head>
+<body>
+    <!-- Bottom Navigation -->
+    <div id="main-nav">
+        <div id="incoming">
+
+            <button onclick="load_page('{%url 'core:incoming_transaction_list_view'%}')" style="border-bottom-right-radius: 0; border-top-right-radius: 0; margin-right: 0;"><i class="fas fa-angle-double-down"></i></button>
+        </div>
+        <div id="transactions">
+            <button onclick="load_page('{%url 'core:account_list_view'%}')" style="border-radius: 0; margin-left: 0; margin-right: 0"><i class="fas fa-poll"></i></button>
+        </div>
+        <div id="outgoing">
+            <button onclick="load_page('{%url 'core:outgoing_transaction_list_view'%}')" style="border-bottom-left-radius: 0; border-top-left-radius: 0; margin-left: 0;"><i class="fas fa-angle-double-up"></i></button>
+        </div>
+    </div>
+    <!-- Top Navigation -->
+    <div id="top-nav"><i class="fas fa-bars"></i></div>
+    <div id="top-nav-title">MyBank<span>Companion</span></div>
+    <div id="companion-logo"><?xml version="1.0" encoding="utf-8"?><i class="fab fa-fort-awesome-alt"></i></div>
+    <div id="top-nav-container">
+        <a onclick="load_page('{% url 'core:make_transaction_view' %}')" class="nav-element"><i class="fas fa-plus-square"></i> New transaction</a>
+        <a onclick="load_page('{% url 'core:sharing_group_list_view' %}')" class="nav-element"><i class="fas fa-handshake"></i> MyBank Sharing</a>
+        <a onclick="" class="nav-element"><i class="fas fa-credit-card"></i> SouthTyrol Pass</a>
+        <a onclick="" class="nav-element"><?xml version="1.0" encoding="utf-8"?>
+            <i class="fas fa-user"></i> My Account</a>
+        <a onclick="" class="nav-element"><i class="fas fa-newspaper"></i> News</a>
+        <a href="/accounts/logout/" class="nav-element"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <img alt="HackTheAlps" src="https://www.hackthealps.it/wp-content/uploads/2018/05/Logo-1-280x280.png" style="max-width: 50px; -webkit-filter: grayscale(1) brightness(3); filter: grayscale(1) brightness(3); opacity: .3; position: absolute; left: 10px; top: 10px; max-width: 60px; height: 60px;" />
+    </div>
+    <script>
+    $('#top-nav').click(function() {
+        $('body').toggleClass('show-nav');
+        if ($('body').hasClass('show-nav')) {
+            $('#top-nav-container').fadeIn(150);
+        } else {
+            $('#top-nav-container').fadeOut(150);
+        }
+    });
+    </script>
+    <!-- Content block -->
+    <div id="content-wrapper">
+        <div id="content">
+        {% block content %}
+            
+        {% endblock %}
+        </div>
+        <div id="main-overlay" style="display:none;">
+
+        </div>
+        <div id="footer"></div>
+        </div>
+    <form id="csrf-form">{% csrf_token %}</form>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

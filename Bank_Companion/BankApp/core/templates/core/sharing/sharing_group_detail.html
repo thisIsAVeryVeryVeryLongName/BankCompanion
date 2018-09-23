@@ -1,0 +1,10 @@
+<button onclick="load_page('{%url 'core:sharing_group_list_view'%}')" style="position: absolute; top: 100px; right: 10px;"><i class="fas fa-caret-left"></i> Back</button>
+  <h1>Group Name:<br />{{ sharing_group.name }}</h1>
+    {%for si in sharing_info%}
+        <div class="sharing-group"> {{si.user.first_name}}<br></div>
+    {%endfor%}  
+
+     <button onclick="load_page('{%url 'core:sharing_spendings_detail_view' sharing_group.pk %}')"> Spendings </button>
+     <button onclick="load_page('{%url 'core:sharing_spendings_balance_view' sharing_group.pk %}')"> Balance </button>
+
+     
